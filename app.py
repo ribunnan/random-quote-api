@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 import random
 import os
 
@@ -19,9 +19,8 @@ def home():
 
 @app.route('/api/random-quote')
 def random_quote():
-    return jsonify({"quote": random.choice(quotes)})
+    return random.choice(quotes)  # 直接返回纯文本，不是 JSON
 
 if __name__ == '__main__':
-    # 让 Render 指定的端口生效
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
