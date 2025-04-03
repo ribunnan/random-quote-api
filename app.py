@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
 import random
+import os
 
 app = Flask(__name__)
 
+# 语录库
 quotes = [
     "生活就像骑自行车，要想保持平衡就得继续前行。",
     "不要轻言放弃，否则对不起自己。",
@@ -20,4 +22,6 @@ def random_quote():
     return jsonify({"quote": random.choice(quotes)})
 
 if __name__ == '__main__':
-    app.run()
+    # 让 Render 指定的端口生效
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
