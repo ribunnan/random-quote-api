@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 import random
 import os
 import json
@@ -16,7 +16,8 @@ def home():
 @app.route('/api/random-word')
 def random_word():
     word = random.choice(words)
-    return jsonify(word)  # 返回结构化 JSON 格式
+    # 返回纯文本，适合浏览器直接显示
+    return f"{word['word']}（{word['kana']}）：{word['meaning']}（{word['pos']}，重音：{word['pron']}）"
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
