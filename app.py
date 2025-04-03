@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
 import random
 import os
 import json
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False  # ✅ 关键设置，防止 Unicode 转义
 
 # 从 words.json 文件读取词汇库
 with open("words.json", encoding="utf-8") as f:
@@ -16,8 +17,7 @@ def home():
 @app.route('/api/random-word')
 def random_word():
     word = random.choice(words)
-    # 返回纯文本，适合浏览器直接显示
-    return f"{word['word']}（{word['kana']}）：{word['meaning']}（{word['pos']}，重音：{word['pron']}）"
+    return jsonify(word)  # 结构化 JSON 返回，字段名 + 正常文字
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
